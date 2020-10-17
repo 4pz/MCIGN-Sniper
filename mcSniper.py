@@ -2,7 +2,7 @@ import aiohttp
 import asyncio, sys
 from datetime import datetime, timedelta
 
-class playerInfo:
+class playerInfo: #class to store data
     def __init__(self, UUID, Bearer_Key, Target_IGN, Password, dropTime):
         self.UUID = UUID
         self.Bearer_Key = Bearer_Key
@@ -10,7 +10,7 @@ class playerInfo:
         self.Password = Password
         self.dropTime = dropTime
 
-def conformation():
+def conformation(): #getting user info
     global Target_IGN
     global dropTime
     global Bearer_Key
@@ -24,7 +24,7 @@ def conformation():
     playerInfo1 = playerInfo(UUID, Bearer_Key, Target_IGN, Password, dropTime)
     print(f"UUID: [{playerInfo1.UUID}]\nBearer Key: [{playerInfo1.Bearer_Key}]\nDesired IGN: [{playerInfo1.Target_IGN}]\nPassword: [{playerInfo1.Password}]\nDrop Time: [{playerInfo1.dropTime}]")
 
-async def main():
+async def main(): #sniping function
     global auth
     auth = "Bearer " + playerInfo1.Bearer_Key
     async with aiohttp.ClientSession() as session:
