@@ -1,5 +1,5 @@
 import aiohttp
-import asyncio, sys
+import asyncio, sys, time, requests
 from datetime import datetime, timedelta
 
 class playerInfo: #class to store data
@@ -12,11 +12,11 @@ class playerInfo: #class to store data
 
 def nameReserveConformation(): #getting user info
     global Target_IGNR
+    global bearerKey
+    global auth
+    bearerKey = input("Enter Bearer Key: ")
     Target_IGNR = input("Enter your desired IGN: ")
-
-def skinChangeConformation():
-    global UUIDS
-    UUIDS = input("Enter your UUID: ")
+    auth = "Bearer " + bearerKey
 
 def conformation(): #getting user info
     global Target_IGN
@@ -31,6 +31,19 @@ def conformation(): #getting user info
     dropTime = input("Enter the time of drop: ")
     playerInfo1 = playerInfo(UUID, Bearer_Key, Target_IGN, Password, dropTime)
     print(f"UUID: [{playerInfo1.UUID}]\nBearer Key: [{playerInfo1.Bearer_Key}]\nDesired IGN: [{playerInfo1.Target_IGN}]\nPassword: [{playerInfo1.Password}]\nDrop Time: [{playerInfo1.dropTime}]")
+
+def login():
+    print("[*] Login...")
+    time.sleep(1)
+    user = input("[*] Enter Username: ")
+    url = f"https://api.mojang.com/users/profiles/minecraft/{user}?at=0"
+    req = requests.get(url)
+    print(req.content)
+    correct = input("[*] Does this UUID match yours? Y/n: ")
+    if correct.lower() == "y":
+        print("[*] Success")
+    if correct.lower() == "n":
+        sys.exit()
 
 async def main(): #sniping function
     global auth
@@ -49,7 +62,7 @@ async def reserve():
     global origin
     origin = "https://www.checkout.minecraft.net"
     async with aiohttp.ClientSession() as session:
-        async with session.put(f"https://api.mojang.com/user/profile/agent/minecraft/name/{Target_IGNR}", headers = {"Authorization": auth, "Origin": origin})
+        async with session.put(f"https://api.mojang.com/user/profile/agent/minecraft/name/{Target_IGNR}", headers = {"Authorization": auth,"Origin": origin}) as resp:
             print(await resp.text())
             x = resp.status
         if x == 204:
@@ -58,11 +71,8 @@ async def reserve():
             print(x)
             print("Failiure!")
 
-async def skinChange():
-    async
-
-
 if __name__ == '__main__':
+    login()
     choice = input("Would you like to use the IGN Sniper? Y/n: ")
     if choice.lower() == "y":
         conformation()
@@ -97,9 +107,3 @@ if __name__ == '__main__':
                 elif time == dropTime:
                     loop = asyncio.get_event_loop()
                     loop.run_until_complete(reserve())
-
-        elif choice1.lower() == "n":
-            choice2 = input("Would you like to use the Skin Changer? Y/n: ")
-            if choice2.lower() = "y":
-                print("ok") #pause
-            
