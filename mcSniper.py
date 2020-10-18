@@ -1,3 +1,5 @@
+#adding support for more features soon.
+
 import aiohttp
 import asyncio, sys, time, requests
 from datetime import datetime, timedelta
