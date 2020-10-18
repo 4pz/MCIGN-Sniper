@@ -10,12 +10,14 @@ class playerInfo: #class to store data
         self.Password = Password
         self.dropTime = dropTime
 
-def nameReserveConformation(): #getting user info
+def nameReserveConformation(): #getting user info (not implemented fully)
     global Target_IGNR
     global bearerKey
     global auth
+    global dropTime
     bearerKey = input("Enter Bearer Key: ")
     Target_IGNR = input("Enter your desired IGN: ")
+    dropTime = input("Enter the IGN drop time: ")
     auth = "Bearer " + bearerKey
 
 def conformation(): #getting user info
@@ -58,7 +60,7 @@ async def main(): #sniping function
         print(x)
         print("Failure!")
 
-async def reserve():
+async def reserve(): #not implemented fully
     global origin
     origin = "https://www.checkout.minecraft.net"
     async with aiohttp.ClientSession() as session:
@@ -91,19 +93,20 @@ if __name__ == '__main__':
                 loop.run_until_complete(main())
 
     elif choice.lower() == "n":
-        choice1 = input("Would you like to use the name reserver? Y/n: ")
-        if choice1.lower() == "y":
-            nameReserveConformation()
-            print(f"Sniping {Target_IGNR} at {dropTime}...")
-            while True:
-                now = datetime.now()
-                now = str(now)
-                parts = now.split()
-                parts1 = parts[1]
-                exacTime = parts1.split(".")
-                time = exacTime[0]
-                if time != dropTime:
-                    pass        
-                elif time == dropTime:
-                    loop = asyncio.get_event_loop()
-                    loop.run_until_complete(reserve())
+        sys.exit()
+    #    choice1 = input("Would you like to use the name reserver? Y/n: ")
+    #    if choice1.lower() == "y":
+    #        nameReserveConformation()
+    #        print(f"Sniping {Target_IGNR} at {dropTime}...")
+    #        while True:
+    #            now = datetime.now()
+    #            now = str(now)
+    #            parts = now.split()
+    #            parts1 = parts[1]
+    #            exacTime = parts1.split(".")
+    #            time = exacTime[0]
+    #            if time != dropTime:
+    #                pass        
+    #            elif time == dropTime:
+    #                loop = asyncio.get_event_loop()
+    #                loop.run_until_complete(reserve())
